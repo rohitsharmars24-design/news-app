@@ -53,20 +53,27 @@ export default class Newbar extends Component {
       this.props.show(null);
     },5000)
     }
-    else{
-   
-      this.setState({
-          articles:he,
-          loading:false,
-          errorMsg:{
-            codeType:resp.code,
-            message:resp.message
-          }
-      //  pageCount:prevState.pageCount + 1 ,
-        // page:"&page=" + resp.nextPage
-    })
-    this.props.show("alert-danger","OH oh ow "+ this.state.errorMsg?.codeType,this.state.errorMsg?.message)
-  }
+    else {
+  this.setState({
+    articles: he,
+    loading: false,
+    errorMsg: {
+      codeType: resp.code,
+      message: resp.message
+    },
+    totalResult: he.length
+  }, () => {
+    
+    this.props.show("alert-danger", "OH oh ow " + this.state.errorMsg?.codeType, this.state.errorMsg?.message);
+    
+    setTimeout(() => {
+      this.props.show(null);
+    }, 5000);
+  });
+}
+
+
+
   this.props.iprogress(100);
    }
   
@@ -227,7 +234,7 @@ export default class Newbar extends Component {
       {this.state.loading && <Spinner/>}
     
       
-      <div className=" row mt-5 mx-0">
+      <div className=" row mt-5 mx-0 justify-items-center">
         {<div className="main-heading"  style={props.mode=='dark'?{color:"white"}:{color:'#0c0b59'}}>{this.state.articles==result?'Data Cannot Fetch ..Breaking News-Data from default API':'Breaking News-Data from '+this.props.title +'--Result--'+this.state.totalResult}</div>}
       { this.state.articles.map((element)=>{
           return <NewItem key= {element.article_id} publish={this.state.articles==result?element.pubDate:element.publishedAt} source={this.state.articles==result?element.source_name:element.source?.name} title={element.title?(element.title.length<=45?element.title:element.title.slice(0,45)+"..."):""} description={element.description?(element.description.length<=85?element.description:element.description.slice(0,85)+"...."):""} imageUrl={this.state.articles==result?element.image_url:element.urlToImage} btnLink={this.state.articles==result?element.link:element.url}  mode={props.mode} stylemodify={props.stylemodi}/>

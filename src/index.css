@@ -6,3 +6,11 @@
     margin-bottom: 75px;
     text-decoration: underline;
 }
+.card{
+    margin:auto;
+}
+@media(max-width:767px){
+    .card{
+    width:100%;
+}
+}

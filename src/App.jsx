@@ -81,9 +81,6 @@ function App() {
       heading:heading,
       Message:message
     })
-     setTimeout(() => {
-     setAlert(null)
-    }, 2000);
   }
 
     return (
