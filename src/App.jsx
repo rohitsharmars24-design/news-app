@@ -4,7 +4,8 @@ import Navbar from './components/Navbar';
 import Newbar from './components/Newbar';
 import LoadingBar from "react-top-loading-bar";
 import Alert from './components/alert';
-import { BrowserRouter as Router,
+import TextForm from './components/textForm';
+import {HashRouter as Router,
   Routes,
   Route,
   Link
@@ -43,6 +44,8 @@ function App() {
        })
        
         document.body.style.backgroundColor="#000000";
+         showAlert("alert-primary","Dark Mode  ","Dark Mode is Enable ...carry on your work in Dark theme");
+        document.body.style.backgroundColor="#000000";
       //  setInterval(() => {
       //    document.title="Install dark mode";
       //  },1500);
@@ -60,6 +63,7 @@ function App() {
     // setMyBtnText('Disable Dark Mode');
       document.title='Light mode enable';
       document.body.style.backgroundColor="#ffffff";
+      showAlert("alert-success","Light Mode    ","light Mode is Enable ...carry on your work in Light theme");
     }
     
     //  setInterval(() => {
@@ -77,6 +81,9 @@ function App() {
       heading:heading,
       Message:message
     })
+     setTimeout(() => {
+     setAlert(null)
+    }, 2000);
   }
 
     return (
@@ -97,6 +104,7 @@ function App() {
       { alert && <Alert alert={alert} type={alert.Type} heading={alert.heading} message={alert.Message}/>}
       
       <Routes>
+        <Route path="/click" element={ <TextForm heading="This is the sample form" textup="convert to UpperCase" stylemodi= {myStyle} mode={myMode} showAlert={showAlert} />}/>
          <Route path="/" element={ <Newbar show={showAlert} iprogress={Progressive} key="everything"mode={myMode} stylemodi={myStyle} country="everything?domains=wsj.com" title="NewsTrigger-Top news website in world"/>}/>
          <Route path="/america" element={ <Newbar show={showAlert} iprogress={Progressive} key="america" mode={myMode} stylemodi={myStyle} country="top-headlines?&country=us" title="America"/>}/>
          <Route path="/india" element={ <Newbar show={showAlert} iprogress={Progressive} key="india" mode={myMode} stylemodi={myStyle} country="top-headlines?&country=in" title="India"/>}/>

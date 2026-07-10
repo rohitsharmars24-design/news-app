@@ -4,6 +4,7 @@ import checker from 'vite-plugin-checker'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "https://rohitsharmars24-design.github.io/news-app/", 
   plugins: [react(),
    checker({ 
       typescript: false 
