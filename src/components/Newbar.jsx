@@ -26,7 +26,7 @@ export default class Newbar extends Component {
   
    async updateApi(pageNo){
     this.props.iprogress(0);
-     let url=`https://gnews.io/api/v4/top-headlines?category=${this.props.category}&lang=${this.props.lang}&country=${this.props.country}&max=4&page=${pageNo}&apikey=${this.props.apikey}`;
+     let url=`https://api.currentsapi.services/v1/top-headlines?category=${this.props.category}&lang=${this.props.lang}&country=${this.props.country}&page_size=4&page_number=${pageNo}&apikey=${this.props.apikey}`;
     this.setState({loading:true})
     let p= await fetch(url);
     let resp=await p.json();
@@ -37,7 +37,7 @@ export default class Newbar extends Component {
      
     this.setState({
       
-      articles:resp.articles,
+      articles:resp.news,
       loading:false,
       pageCount:this.state.pageCount + pageNo ,
         // page:"&page=" + resp.nextPage
@@ -192,14 +192,14 @@ export default class Newbar extends Component {
     this.setState({
       pageCount:this.state.pageCount + 1
     })
-     let url=`https://gnews.io/api/v4/top-headlines?category=${this.props.category}&lang=${this.props.lang}&country=${this.props.country}&max=4&page=${this.state.pageCount + 1}&apikey=${this.props.apikey}`;
+     let url=`https://api.currentsapi.services/v1/top-headlines?category=${this.props.category}&lang=${this.props.lang}&country=${this.props.country}&page_size=4&page_number=${this.state.pageCount + 1}&apikey=${this.props.apikey}`;
     this.setState({loading:true})
     let p= await fetch(url);
     let resp=await p.json();
     console.log(resp);
      if(p.status==200){
     this.setState({
-      articles:this.state.articles.concat(resp.articles),
+      articles:this.state.articles.concat(resp.news),
       totalResult:resp.totalArticles,
       loading:false
         // page:"&page=" + resp.nextPage
