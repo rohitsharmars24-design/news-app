@@ -26,7 +26,7 @@ export default class Newbar extends Component {
   
    async updateApi(pageNo){
     this.props.iprogress(0);
-     let url=`https://api.currentsapi.services/v1/top-headlines?category=${this.props.category}&lang=${this.props.lang}&country=${this.props.country}&page_size=4&page_number=${pageNo}&apikey=${this.props.apikey}`;
+     let url=`https://api.currentsapi.services/v1/latest-news?&page_size=4&page_number=${this.state.pageCount + pageNo}&apikey=${this.props.apikey}`;
     this.setState({loading:true})
     let p= await fetch(url);
     let resp=await p.json();
