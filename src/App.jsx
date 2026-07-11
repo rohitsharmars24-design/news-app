@@ -22,7 +22,7 @@ import {HashRouter as Router,
 //     }
 //   }
 
-
+const apikey=import.meta.env.VITE_GNEWS_API_KEY;
 function App() {
   const [myMode,setMyMode]=useState('light');// whether dark mode is enabled or not
   const [myStyle,setMyStyle]= useState({
@@ -81,6 +81,9 @@ function App() {
       heading:heading,
       Message:message
     })
+    // setTimeout(() => {
+    //   setAlert(null)
+    // },5000);
   }
 
     return (
@@ -102,11 +105,13 @@ function App() {
       
       <Routes>
         <Route path="/click" element={ <TextForm heading="This is the sample form" textup="convert to UpperCase" stylemodi= {myStyle} mode={myMode} showAlert={showAlert} />}/>
-         <Route path="/" element={ <Newbar show={showAlert} iprogress={Progressive} key="everything"mode={myMode} stylemodi={myStyle} country="everything?domains=wsj.com" title="NewsTrigger-Top news website in world"/>}/>
-         <Route path="/america" element={ <Newbar show={showAlert} iprogress={Progressive} key="america" mode={myMode} stylemodi={myStyle} country="top-headlines?&country=us" title="America"/>}/>
-         <Route path="/india" element={ <Newbar show={showAlert} iprogress={Progressive} key="india" mode={myMode} stylemodi={myStyle} country="top-headlines?&country=in" title="India"/>}/>
-         <Route path="/canada" element={ <Newbar show={showAlert} iprogress={Progressive} key="canada" mode={myMode} stylemodi={myStyle} country="top-headlines?&country=ca" title="Canada"/>}/>
-         <Route path="/australia" element={ <Newbar show={showAlert} iprogress={Progressive} key="australia" mode={myMode} stylemodi={myStyle} country="top-headlines?&country=au" title="Australia"/>}/>
+
+         <Route path="/" element={ <Newbar show={showAlert} iprogress={Progressive} key="everything"mode={myMode} stylemodi={myStyle} country="any" cateory="general" lang="en"  title="NewsTrigger-Top news website in world" apikey={apikey}/>}/>
+
+         <Route path="/america" element={ <Newbar show={showAlert} iprogress={Progressive} key="america" mode={myMode} stylemodi={myStyle} country="ar" cateory="general" lang="en" title="America" apikey={apikey}/>}/>
+         <Route path="/india" element={ <Newbar show={showAlert} iprogress={Progressive} key="india" mode={myMode} stylemodi={myStyle} country="in" cateory="general" lang="en"  title="India" apikey={apikey}/>}/>
+         <Route path="/canada" element={ <Newbar show={showAlert} iprogress={Progressive} key="canada" mode={myMode} stylemodi={myStyle} country="ca" cateory="general" lang="en"  title="Canada" apikey={apikey}/>}/>
+         <Route path="/australia" element={ <Newbar show={showAlert} iprogress={Progressive} key="australia" mode={myMode} stylemodi={myStyle} country="au" cateory="general" lang="en"  title="Australia" apikey={apikey}/>}/>
         
       </Routes>
    </Router>

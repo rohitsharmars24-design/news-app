@@ -26,7 +26,7 @@ export default class Newbar extends Component {
   
    async updateApi(pageNo){
     this.props.iprogress(0);
-     let url=`https://newsapi.org/v2/${this.props.country}&apiKey=d94856cd4d634f3bb48bb31911c165ff&page=${this.state.pageCount + pageNo}&pageSize=4`;
+     let url=`https://gnews.io/api/v4/top-headlines?category=${this.props.category}&lang=${this.props.lang}&country=${this.props.country}&max=4&page=${pageNo}&apikey=${this.props.apikey}`;
     this.setState({loading:true})
     let p= await fetch(url);
     let resp=await p.json();
@@ -38,28 +38,29 @@ export default class Newbar extends Component {
     this.setState({
       
       articles:resp.articles,
-      totalResult:resp.totalResults,
       loading:false,
       pageCount:this.state.pageCount + pageNo ,
         // page:"&page=" + resp.nextPage
         errorMsg:{
             codeType:"Data of News are opened",
-            message:"All news opened from apple server"
-          }
-        
-    })
-    this.props.show("alert-success","Worldwide   "+ this.state.errorMsg?.codeType,this.state.errorMsg?.message)
+            message:resp.information?.realTimeArticles?.message
+          },
+        totalResult:resp.totalArticles,
+    },()=>{
+       this.props.show("alert-success","Worldwide   "+ this.state.errorMsg?.codeType,this.state.errorMsg?.message)
     setTimeout(()=>{
       this.props.show(null);
     },5000)
+    })
+   
     }
     else {
   this.setState({
     articles: he,
     loading: false,
     errorMsg: {
-      codeType: resp.code,
-      message: resp.message
+      codeType: "Some API problem",
+      message: resp.errors?.[0]
     },
     totalResult: he.length
   }, () => {
@@ -191,7 +192,7 @@ export default class Newbar extends Component {
     this.setState({
       pageCount:this.state.pageCount + 1
     })
-     let url=`https://newsapi.org/v2/${this.props.country}&apiKey=d94856cd4d634f3bb48bb31911c165ff&page=${this.state.pageCount + 1}&pageSize=4`;
+     let url=`https://gnews.io/api/v4/top-headlines?category=${this.props.category}&lang=${this.props.lang}&country=${this.props.country}&max=4&page=${this.state.pageCount + 1}&apikey=${this.props.apikey}`;
     this.setState({loading:true})
     let p= await fetch(url);
     let resp=await p.json();
@@ -199,7 +200,7 @@ export default class Newbar extends Component {
      if(p.status==200){
     this.setState({
       articles:this.state.articles.concat(resp.articles),
-      totalResult:resp.totalResults,
+      totalResult:resp.totalArticles,
       loading:false
         // page:"&page=" + resp.nextPage
         
@@ -234,10 +235,10 @@ export default class Newbar extends Component {
       {this.state.loading && <Spinner/>}
     
       
-      <div className=" row mt-5 mx-0 justify-items-center">
+      <div className=" row mt-10 mx-0 justify-items-center" style={{"marginTop":"150px"}}>
         {<div className="main-heading"  style={props.mode=='dark'?{color:"white"}:{color:'#0c0b59'}}>{this.state.articles==result?'Data Cannot Fetch ..Breaking News-Data from default API':'Breaking News-Data from '+this.props.title +'--Result--'+this.state.totalResult}</div>}
       { this.state.articles.map((element)=>{
-          return <NewItem key= {element.article_id} publish={this.state.articles==result?element.pubDate:element.publishedAt} source={this.state.articles==result?element.source_name:element.source?.name} title={element.title?(element.title.length<=45?element.title:element.title.slice(0,45)+"..."):""} description={element.description?(element.description.length<=85?element.description:element.description.slice(0,85)+"...."):""} imageUrl={this.state.articles==result?element.image_url:element.urlToImage} btnLink={this.state.articles==result?element.link:element.url}  mode={props.mode} stylemodify={props.stylemodi}/>
+          return <NewItem key= {element.article_id} publish={this.state.articles==result?element.pubDate:element.publishedAt} source={this.state.articles==result?element.source_name:element.source?.name} title={element.title?(element.title.length<=45?element.title:element.title.slice(0,45)+"..."):""} description={element.description?(element.description.length<=85?element.description:element.description.slice(0,85)+"...."):""} imageUrl={this.state.articles==result?element.image_url:element.image} btnLink={this.state.articles==result?element.link:element.url}  mode={props.mode} stylemodify={props.stylemodi}/>
         })
 
       }
