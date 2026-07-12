@@ -106,18 +106,18 @@ const [text,setText]= useState('');
         <>
         
         <div style={{ ...props.stylemodi, minHeight: "100vh", marginTop:"100px" }}>
-        <div className="container-fluid" style={props.stylemodi}>
+        <div className="container-fluid" style={{backgroundColor: props.stylemodi?.backgroundColor === "white"?"transparent":"black"}}>
          <form className="p-3">
       <div className="mb-3">
         <h1>{heading}</h1>
         {/* <label htmlFor="comments" className="form-label">Message</label> */}
         <textarea className="form-control" id="comments" rows="8" placeholder="Type here..." value={text} onChange={handleOnChanges} style={props.Stylemodi} ></textarea>
       </div>
-      <button  className={`${props.mode==='light'? 'btn btn-outline-primary' :'btn btn-outline-light'} mx-2 my-1`} onClick={handleUpClicks}>{textup}</button> 
-      <button  className={`${props.mode==='light'? 'btn btn-outline-primary' :'btn btn-outline-light'} mx-2 my-1`} onClick={handleLoClicks} >Lower Case</button>
-      <button  className={`${props.mode==='light'? 'btn btn-outline-primary' :'btn btn-outline-light'} mx-2 my-1`} onClick={handleClearClicks} >Clear The Text</button>
-      <button  className={`${props.mode==='light'? 'btn btn-outline-primary' :'btn btn-outline-light'} mx-2 my-1`} onClick={handleRemoveSpsClicks} >Remove Extra Space</button>
-      <button  className={`${props.mode==='light'? 'btn btn-outline-primary' :'btn btn-outline-light'} mx-2 my-1`} onClick={handleCopyTextClicks} >Copy Text</button>
+      <button  className={`${props.mode==='danger'? 'btn btn-outline-danger' :'btn btn-outline-light'} mx-2 my-1`} onClick={handleUpClicks}>{textup}</button> 
+      <button  className={`${props.mode==='danger'? 'btn btn-outline-danger' :'btn btn-outline-light'} mx-2 my-1`} onClick={handleLoClicks} >Lower Case</button>
+      <button  className={`${props.mode==='danger'? 'btn btn-outline-danger' :'btn btn-outline-light'} mx-2 my-1`} onClick={handleClearClicks} >Clear The Text</button>
+      <button  className={`${props.mode==='danger'? 'btn btn-outline-danger' :'btn btn-outline-light'} mx-2 my-1`} onClick={handleRemoveSpsClicks} >Remove Extra Space</button>
+      <button  className={`${props.mode==='danger'? 'btn btn-outline-danger' :'btn btn-outline-light'} mx-2 my-1`} onClick={handleCopyTextClicks} >Copy Text</button>
       {/* <button  className="btn btn-primary" onClick={props.modefun}>{myBtnText} </button> */}
     </form>
     </div>
@@ -137,7 +137,7 @@ const [text,setText]= useState('');
             <p className="words-read">{0.008*text.split(" ").filter((element)=>{return element.length!==0}).length}</p></div> 
         </div>
         {/* <label htmlFor="comments" className="form-label">Message</label> */}
-        <p className="Preview" id="comments-preview" style={props.stylemodi}>{text}</p>
+        <p className="Preview" id="comments-preview" style={{color:props.stylemodi?.color==="black"?"red":"white"}}>{text}</p>
       </div>
     </form>
     </div>

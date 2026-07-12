@@ -24,7 +24,7 @@ import {HashRouter as Router,
 
 const apikey=import.meta.env.VITE_GNEWS_API_KEY;
 function App() {
-  const [myMode,setMyMode]=useState('light');// whether dark mode is enabled or not
+  const [myMode,setMyMode]=useState('danger');// whether dark mode is enabled or not
   const [myStyle,setMyStyle]= useState({
      backgroundColor:'white',
      color:'black'
@@ -35,7 +35,7 @@ function App() {
 
 
   const togglefunc=(e)=>{
-    if(myMode==='light' && myStyle.backgroundColor ==='white'){
+    if(myMode==='danger' && myStyle.backgroundColor ==='white'){
       setMyMode('dark');
       setMyBtnText("Enable Light Mode")
        setMyStyle({
@@ -43,9 +43,10 @@ function App() {
        color:'white'
        })
        
-        document.body.style.backgroundColor="#000000";
+        document.body.classList.toggle('backchange');
          showAlert("alert-primary","Dark Mode  ","Dark Mode is Enable ...carry on your work in Dark theme");
-        document.body.style.backgroundColor="#000000";
+        
+
       //  setInterval(() => {
       //    document.title="Install dark mode";
       //  },1500);
@@ -54,15 +55,15 @@ function App() {
        
     }
     else{
-      setMyMode('light');
+      setMyMode('danger');
       setMyBtnText("Enable Dark Mode")
       setMyStyle({
      backgroundColor:'white',
      color:'black'
     })
     // setMyBtnText('Disable Dark Mode');
+    document.body.classList.remove('backchange');
       document.title='Light mode enable';
-      document.body.style.backgroundColor="#ffffff";
       showAlert("alert-success","Light Mode    ","light Mode is Enable ...carry on your work in Light theme");
     }
     

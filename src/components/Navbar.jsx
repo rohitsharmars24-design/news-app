@@ -21,7 +21,7 @@ export default function Navbar({
 else{
     return(
         <>
-        <nav className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}>
+        <nav className={`navbar navbar-expand-lg navbar-dark bg-${props.mode}`}>
   <div className="container-fluid">
     <Link className="navbar-brand" to="/">{title}</Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,7 @@ else{
       </ul>
       <div className="form-check form-switch mx-3">
  <input 
-  className="form-check-input" 
+  className="form-check-input btn-danger" 
   type="checkbox" 
   role="switch" 
   // 1. THIS FIXES THE HANDLE POSITION: It tells Bootstrap's CSS exactly when to slide the knob right
@@ -60,11 +60,11 @@ else{
   // 2. THIS FIXES THE BACKGROUND: It fires your state function in App.js
   onChange={props.togglefun} 
 />
-  <label className={`form-check-label text-${props.mode === 'light' ? 'dark' : 'light'}`} >{props.chngmode}</label>
+  <label className={`form-check-label text-${props.mode === 'danger' ? 'light' : 'light'}`} >{props.chngmode}</label>
 </div>
       <form className="d-flex" role="search">
         <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-        <button className={`${props.mode==='light'? 'btn btn-outline-primary' :'btn btn-outline-light'} `} type="submit">Search</button>
+        <button className={`${props.mode==='dark'? 'btn btn-outline-light' :'btn btn-outline-light'} `} type="submit">Search</button>
       </form>
     </div>
   </div>

@@ -246,7 +246,7 @@ export default class Newbar extends Component {
     
       
       <div className=" row mt-10 mx-0 justify-items-center" style={{"marginTop":"150px"}}>
-        {<div className="main-heading"  style={props.mode=='dark'?{color:"white"}:{color:'#0c0b59'}}>{this.state.articles==result?'Data Cannot Fetch ..Breaking News-Data from default API':'Breaking News-Data from '+this.props.title +'--Result--'+this.state.totalResult }</div>}
+        {<div className="main-heading"  style={props.mode=='dark'?{color:"white"}:{color:'#8f0d0d'}}>{this.state.articles==result?'Data Cannot Fetch ..Breaking News-Data from default API':'Breaking News-Data from '+this.props.title +'--Result--'+this.state.totalResult }</div>}
       { this.state.articles.map((element)=>{
           return <NewItem key= {element.article_id} publish={this.state.articles==result?element.pubDate:element.published} source={this.state.articles==result?element.source_name:element.source_category} title={element.title?(element.title.length<=45?element.title:element.title.slice(0,45)+"..."):""} description={element.description?(element.description.length<=85?element.description:element.description.slice(0,85)+"...."):""} imageUrl={this.state.articles==result?element.image_url:element.image} btnLink={this.state.articles==result?element.link:element.url}  mode={props.mode} stylemodify={props.stylemodi}/>
         })
