@@ -106,7 +106,7 @@ function App() {
       <Routes>
         <Route path="/click" element={ <TextForm heading="This is the sample form" textup="convert to UpperCase" stylemodi= {myStyle} mode={myMode} showAlert={showAlert} />}/>
 
-         <Route path="/" element={ <Newbar show={showAlert} iprogress={Progressive} key="everything"mode={myMode} stylemodi={myStyle} country="any" category="general" lang="en"  title="NewsTrigger-Top news website in world" apikey={apikey}/>}/>
+         <Route path="/" element={ <Newbar show={showAlert} iprogress={Progressive} key="everything"mode={myMode} stylemodi={myStyle} country="us" category="general" lang="en"  title="NewsTrigger-Top news website in world" apikey={apikey}/>}/>
 
          <Route path="/america" element={ <Newbar show={showAlert} iprogress={Progressive} key="america" mode={myMode} stylemodi={myStyle} country="ar" category="general" lang="en" title="America" apikey={apikey}/>}/>
          <Route path="/india" element={ <Newbar show={showAlert} iprogress={Progressive} key="india" mode={myMode} stylemodi={myStyle} country="in" category="general" lang="en"  title="India" apikey={apikey}/>}/>

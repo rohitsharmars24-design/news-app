@@ -15,7 +15,8 @@ export default class Newbar extends Component {
       totalResult:0,
       loading:false,
       hasMore: true,
-      errorMsg:""
+      errorMsg:"",
+      hasMore:true
     }
     document.title=`${this.props.title}-NewsTrigger`
     this.handleNextClicks = this.handleNextClicks.bind(this);
@@ -26,7 +27,7 @@ export default class Newbar extends Component {
   
    async updateApi(pageNo){
     this.props.iprogress(0);
-     let url=`https://api.currentsapi.services/v1/latest-news?&page_size=4&page_number=${this.state.pageCount + pageNo}&apikey=${this.props.apikey}`;
+     let url=`https://api.currentsapi.services/v1/latest-news?language=${this.props.lang}&country=${this.props.country}&page_size=4&page_number=${pageNo + 1 }&apiKey=${this.props.apikey}`;
     this.setState({loading:true})
     let p= await fetch(url);
     let resp=await p.json();
@@ -45,7 +46,7 @@ export default class Newbar extends Component {
             codeType:"Data of News are opened",
             message:resp.information?.realTimeArticles?.message
           },
-        totalResult:resp.totalArticles,
+        totalResult:this.state.totalResult + resp.news.length,
     },()=>{
        this.props.show("alert-success","Worldwide   "+ this.state.errorMsg?.codeType,this.state.errorMsg?.message)
     setTimeout(()=>{
@@ -192,19 +193,28 @@ export default class Newbar extends Component {
     this.setState({
       pageCount:this.state.pageCount + 1
     })
-     let url=`https://api.currentsapi.services/v1/top-headlines?category=${this.props.category}&lang=${this.props.lang}&country=${this.props.country}&page_size=4&page_number=${this.state.pageCount + 1}&apikey=${this.props.apikey}`;
+     let url=`https://api.currentsapi.services/v1/latest-news?language=${this.props.lang}&country=${this.props.country}&page_size=4&page_number=${this.state.pageCount + 1 }&apiKey=${this.props.apikey}`;
     this.setState({loading:true})
     let p= await fetch(url);
     let resp=await p.json();
     console.log(resp);
      if(p.status==200){
-    this.setState({
+       if (!resp.news || resp.news.length === 0) {
+        this.setState({
+        hasMore: false,     
+        // loading: false
+      });
+       }
+       else{
+        this.setState({
       articles:this.state.articles.concat(resp.news),
-      totalResult:resp.totalArticles,
+      totalResult:this.state.totalResult + resp.news.length,
       loading:false
         // page:"&page=" + resp.nextPage
         
     })
+       }
+    
   }
   else{
      this.setState({
@@ -228,7 +238,7 @@ export default class Newbar extends Component {
        <InfiniteScroll
       dataLength={this.state.articles.length}
       next={this.fetchMoreData}
-      hasMore={this.state.articles.length !==this.state.totalResult}
+      hasMore={this.state.hasMore}
       loader={<Spinner/>}
       endMessage={<p style={{ textAlign: 'center' }}>All items loaded.</p>}
     >
@@ -236,9 +246,9 @@ export default class Newbar extends Component {
     
       
       <div className=" row mt-10 mx-0 justify-items-center" style={{"marginTop":"150px"}}>
-        {<div className="main-heading"  style={props.mode=='dark'?{color:"white"}:{color:'#0c0b59'}}>{this.state.articles==result?'Data Cannot Fetch ..Breaking News-Data from default API':'Breaking News-Data from '+this.props.title +'--Result--'+this.state.totalResult}</div>}
+        {<div className="main-heading"  style={props.mode=='dark'?{color:"white"}:{color:'#0c0b59'}}>{this.state.articles==result?'Data Cannot Fetch ..Breaking News-Data from default API':'Breaking News-Data from '+this.props.title +'--Result--'+this.state.totalResult }</div>}
       { this.state.articles.map((element)=>{
-          return <NewItem key= {element.article_id} publish={this.state.articles==result?element.pubDate:element.publishedAt} source={this.state.articles==result?element.source_name:element.source?.name} title={element.title?(element.title.length<=45?element.title:element.title.slice(0,45)+"..."):""} description={element.description?(element.description.length<=85?element.description:element.description.slice(0,85)+"...."):""} imageUrl={this.state.articles==result?element.image_url:element.image} btnLink={this.state.articles==result?element.link:element.url}  mode={props.mode} stylemodify={props.stylemodi}/>
+          return <NewItem key= {element.article_id} publish={this.state.articles==result?element.pubDate:element.published} source={this.state.articles==result?element.source_name:element.source_category} title={element.title?(element.title.length<=45?element.title:element.title.slice(0,45)+"..."):""} description={element.description?(element.description.length<=85?element.description:element.description.slice(0,85)+"...."):""} imageUrl={this.state.articles==result?element.image_url:element.image} btnLink={this.state.articles==result?element.link:element.url}  mode={props.mode} stylemodify={props.stylemodi}/>
         })
 
       }
